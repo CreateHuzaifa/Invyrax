@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Invyrax — Run code locally in your browser</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo">IV</div>
+      <div>
+        <h1>Invyrax — Run code locally in your browser</h1>
+        <div class="lead small">A lightweight in-browser compiler & sandbox for rapid testing — by Huzaifa</div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <div>
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div style="font-weight:700">Code Runner</div>
+              <div class="small">Run JavaScript safely inside a sandboxed iframe</div>
+            </div>
+            <div class="small pill">Local • No server</div>
+          </div>
+
+          <div style="margin-top:12px">
+            <div class="controls">
+              <select id="lang" title="language">
+                <option value="js">JavaScript (in-browser)</option>
+              </select>
+              <button id="runBtn" class="primary">Run ▶</button>
+              <button id="stopBtn">Stop</button>
+              <button id="saveBtn">Save snippet</button>
+              <button id="clearOutput">Clear output</button>
+            </div>
+
+            <textarea id="editor" spellcheck="false">// Welcome to Invyrax — try this sample
+const now = new Date();
+console.log("Hello from Invyrax! The time is", now.toLocaleString());
+
+function fib(n){
+  if(n<=1) return n;
+  return fib(n-1)+fib(n-2);
+}
+console.log("fib(10) =", fib(10));
+</textarea>
+
+            <div style="margin-top:10px;font-weight:600">Output</div>
+            <div id="output" class="output"></div>
+
+            <div class="meta">
+              <div class="small">Tip: code never leaves your browser. Use the Save button to download the snippet.</div>
+            </div>
+          </div>
+        </div>
+
+        <footer>
+          <div style="margin-top:12px">Built with a minimal JS sandbox — for demos and learning. Not for running untrusted code in production.</div>
+        </footer>
+      </div>
+
+      <div>
+        <div class="hero card">
+          <h3 style="margin:0">What is Invyrax?</h3>
+          <p class="small" style="margin-top:8px">Invyrax is a browser-first tool that compiles & runs code locally so you can iterate fast without uploading your code to servers. Great for prototypes, demos, and teaching.</p>
+
+          <div class="feature-list">
+            <div class="feature"><strong>Local-first</strong><div class="small">No code sent to server</div></div>
+            <div class="feature"><strong>Instant feedback</strong><div class="small">Console + error capture</div></div>
+            <div class="feature"><strong>Shareable</strong><div class="small">Export snippets</div></div>
+            <div class="feature"><strong>Simple</strong><div class="small">Runs in any modern browser</div></div>
+          </div>
+
+          <div class="actions">
+            <a href="#" id="demoDownload" class="link">Download demo HTML</a>
+            <span style="flex:1"></span>
+            <div class="small">Owner: Huzaifa</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<script src="script.js"></script>
+</body>
+</html>
