@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INVYRAX Anime Clock</title>
+
+<style>
+/* ------------------------------
+   RESET + BASE
+------------------------------ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0d0f16 0%, #121826 40%, #1b2238 100%);
+    overflow: hidden;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    position: relative;
+}
+
+/* ------------------------------
+   ANIME AMBIENCE
+------------------------------ */
+.particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        radial-gradient(circle at 20% 30%, rgba(255,180,200,0.08) 0%, transparent 40%),
+        radial-gradient(circle at 80% 20%, rgba(120,180,255,0.06) 0%, transparent 40%),
+        radial-gradient(circle at 50% 80%, rgba(170,140,255,0.08) 0%, transparent 35%);
+    animation: float 10s ease-in-out infinite;
+}
+@keyframes float {
+    0%,100% { transform: translateY(0px); opacity: .6; }
+    50% { transform: translateY(-18px); opacity: .85; }
+}
+
+/* Soft Anime Glow Balls */
+.glow {
+    position: absolute;
+    width: 450px;
+    height: 450px;
+    border-radius: 50%;
+    filter: blur(130px);
+    opacity: 0.2;
+    animation: breathe 9s ease-in-out infinite;
+}
+.glow.a { background: rgba(140,180,255,0.7); top: -200px; left: -200px; }
+.glow.b { background: rgba(255,150,200,0.6); bottom: -220px; right: -180px; animation-delay: 2s; }
+.glow.c { background: rgba(190,150,255,0.55); top: 40%; left: 50%; transform: translate(-50%,-50%); animation-delay: 4s; }
+
+@keyframes breathe {
+    0%,100% { transform: scale(1); opacity: .18; }
+    50% { transform: scale(1.1); opacity: .27; }
+}
+
+/* ------------------------------
+   CLOCK CONTAINER
+------------------------------ */
+.clock {
+    width: 430px;
+    height: 520px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 40px;
+    backdrop-filter: blur(30px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.12);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.4),
+        inset 0 1px 2px rgba(255,255,255,0.2);
+}
+
+/* Rotating gradient anime aura */
+.aura {
+    position: absolute;
+    width: 450px;
+    height: 450px;
+    border-radius: 50%;
+    filter: blur(55px);
+    animation: auraSpin 18s linear infinite;
+    background: conic-gradient(
+        from 0deg,
+        rgba(147,197,253,0.25),
+        rgba(244,114,182,0.25),
+        rgba(196,181,253,0.25),
+        rgba(147,197,253,0.25)
+    );
+    opacity: 0.6;
+}
+@keyframes auraSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ------------------------------
+   CLOCK FACE
+------------------------------ */
+.face {
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #1a1f2f 0%, #111726 100%);
+    border: 2px solid rgba(160,170,190,0.4);
+    position: relative;
+    box-shadow:
+        0 0 25px rgba(147,197,253,0.15),
+        inset 0 2px 8px rgba(0,0,0,0.5);
+}
+
+/* Hour markers */
+.marker {
+    position: absolute;
+    width: 3px;
+    height: 18px;
+    background: rgba(255,255,255,0.5);
+    left: 50%;
+    top: 12px;
+    transform-origin: 50% 148px;
+    border-radius: 2px;
+}
+.marker.big {
+    height: 24px;
+    background: rgba(180,200,255,0.9);
+    box-shadow: 0 0 12px rgba(147,197,253,0.7);
+}
+
+/* Hands */
+.hand {
+    position: absolute;
+    left: 50%;
+    bottom: 50%;
+    transform-origin: center 100%;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+    transition: transform .2s cubic-bezier(.4,0,.2,1);
+}
+.hour {
+    width: 8px;
+    height: 90px;
+    margin-left: -4px;
+    background: linear-gradient(to top, #f0f4ff, #d6d9e8);
+    border-radius: 4px;
+}
+.minute {
+    width: 6px;
+    height: 130px;
+    margin-left: -3px;
+    background: linear-gradient(to top, #f8fbff, #e5e8f3);
+    border-radius: 3px;
+}
+.second {
+    width: 2px;
+    height: 150px;
+    margin-left: -1px;
+    background: #9fc6ff;
+    box-shadow: 0 0 20px #9fc6ff;
+}
+
+/* Center pin */
+.cap {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #eef2ff, #cdd3e0);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Logo */
+.logo {
+    position: absolute;
+    bottom: 70px;
+    width: 100%;
+    text-align: center;
+    font-weight: 700;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg,#93c5fd,#d8b4fe,#fb7185);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: logoShift 6s ease-in-out infinite;
+    opacity: .6;
+}
+@keyframes logoShift {
+    0%,100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="particles"></div>
+<div class="glow a"></div>
+<div class="glow b"></div>
+<div class="glow c"></div>
+
+<div class="clock">
+    <div class="aura"></div>
+
+    <div class="face" id="face"></div>
+
+    <div class="hand hour" id="hourHand"></div>
+    <div class="hand minute" id="minuteHand"></div>
+    <div class="hand second" id="secondHand"></div>
+
+    <div class="cap"></div>
+    <div class="logo">INVYRAX</div>
+</div>
+
+<script>
+// Generate hour markers
+const face = document.getElementById("face");
+for (let i = 0; i < 12; i++) {
+    let m = document.createElement("div");
+    m.className = (i % 3 === 0) ? "marker big" : "marker";
+    m.style.transform = `translateX(-50%) rotate(${i * 30}deg)`;
+    face.appendChild(m);
+}
+
+// Smooth clock movement
+function updateClock() {
+    const now = new Date();
+    const h = now.getHours() % 12;
+    const m = now.getMinutes();
+    const s = now.getSeconds();
+
+    document.getElementById("hourHand").style.transform =
+        `translateX(-50%) rotate(${h * 30 + m/2}deg)`;
+
+    document.getElementById("minuteHand").style.transform =
+        `translateX(-50%) rotate(${m * 6}deg)`;
+
+    document.getElementById("secondHand").style.transform =
+        `translateX(-50%) rotate(${s * 6}deg)`;
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+</script>
+</body>
+</html>
